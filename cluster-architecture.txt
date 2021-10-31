@@ -1,0 +1,32 @@
+Master Nodes: Responsible for managing the k8s cluster, storing info regarding the different nodes, planning which container goes
+    where, monitoring nodes and container on them, etc.
+    Master does all of these using control playing components.
+
+    ETCD cluster:
+    There are many containers which are managed by master, so, to maaintain these information like what continer is on which node,
+    at what time was the container started, etc. All of these are stored in higly available key value store called ETCD.
+    ETCD: It stores the information in key: value format.
+
+    Kube-scheduler:
+    It identifies the right node to place a container on based on container's resource requirements, worker nodes capacity, or any
+    other policy such as taints, and toleration or node affinity rules.
+
+    Kube-Controller-Manager:
+        Node-controller:
+        It takes care of onboarding new nodes onto the cluster, handling situations where nodes become unavailable or gets destroyed.
+
+        Replication-controller:
+        Ensures that the desired number of containers are running at all times in a replication group.
+    
+    Kube-apiserver(Primary management component of k8s):
+    It is responsible for orchestrating all operations within the cluster. It exposes the k8s apis which are used by external users to perform
+    management operation of the cluster, as well as the various controller to manage the state of cluster, and make necessary 
+    changes as required. Its also used by the worker nodes to communicate with server.
+
+Worker Nodes: Hosts application in form of container.
+    
+    kubelet: Its an agent which runs on each node in the cluster. It listens the instruction from Kube-apiserver and deploys or 
+    destroys container on the node as required.
+    Kube-apiserver periodically fetches status report from kubelet to monitor the status of node and container on them.
+
+    kube-proxy: It enables communcation between worker nodes. 
