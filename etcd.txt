@@ -1,0 +1,5 @@
+ETCD: It is a distributed reliable key-valu store that is simple, secure, and fast.
+
+In kubernetes, this datastore holds info about the cluster such as nodes, pods, configs, secrets, accounts, role, bindings, etc. Kubectl command gets information
+from ETCD server.
+Every change to the cluster such as adding additional nodes, deploying pods or replica sets are updated in ETCD server.

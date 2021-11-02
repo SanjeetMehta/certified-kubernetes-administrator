@@ -1,0 +1,28 @@
+Kube-api-server: It is the primary management component in k8s.
+
+Kubectl command reaches to kube-api-server -> Kube-api-server then authenticates and validates the request -> It then retrieves
+the data from ETCD cluster and response back.
+
+We can directly use POST request in place of running kubectl commands.
+
+Steps taken by k8s to create a Pod object without assigning it to a node.
+    Request for creating a pod to kube-api-server
+    Authenticate -> validate -> retrieve data
+    Kube-api-server update the ETCD server and updates the user that the pod is created.
+    Scheduler continously monitors the api-server and realizes that there is no node assigned to the pod.
+    Scheduler identifies the right node to place the pod on and communicates that back to kube-api-server.
+    api-server then updates the info in ETCD cluster. 
+    api-server then passes on that info to the kubelet in the appropriate worker node.
+    kubelet then creates the pod on the node and instructs the container runtime engine to deploy the application image.
+    Once done, kubelet then updates the status back to the api-server.
+    api-server then updates the data back in the ETCD cluster.
+
+kube-api-server is the only component which interacts directly with ETCD datastore.
+
+Kube-api-server is responsible for the following:
+1. Authenticate user
+2. Validate request
+3. Retrieve data
+4. Update ETCD server
+5. Scheduler
+6. Kubelet
