@@ -1,0 +1,4 @@
+Kubelet: It registers the node with the kubernetes cluster. When it receives instructions to load a container or a pod on the node 
+    it request the container run time engine (eg: docker) to pull the required image and run the instance.
+    Kubelet then continous to monitor the state of the pod and container in it and reports back to the kube-api-server on a timely
+    basis.

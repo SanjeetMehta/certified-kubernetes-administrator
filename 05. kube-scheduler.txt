@@ -1,0 +1,2 @@
+Kube-Scheduler: It is responsible for deciding which pod goes on which node. It doesn't actually place the pod on the node. 
+    Deployment of the pods is the job of kubelet.

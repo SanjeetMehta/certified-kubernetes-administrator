@@ -1,0 +1,4 @@
+Kube-Proxy: It manages all the networking between the nodes.
+    This is a process which runs on each node and keeps looking for newly created services. Every time a service is created it 
+    creates appropriate rules on each node to forward traffic to those services to the backed pods. One way it does this is using
+    iptable rules onto each nodes.

@@ -1,0 +1,15 @@
+Controller Manager: It continously monitors the state of various components within the system and works towards bring the whole 
+    system to the desired functioning state.
+
+    Eg of controllers:
+    Node Controller: Responsible for monitoring the status of nodes and taking necessary actions to keep the application running.
+    It uses kube-api-server to do that. It checks the status of the node every 5 seconds. 
+    If node-controller doesn't receives the heartbeat within those 5 seconds it marks the node as unreachable, but it waits for 
+    40sec before marking the node as unreachable.
+    After a node is marked as unreachable it gives it 5mins to come back up. If it doesn't then it removes the pod  assigned to that
+    node and provisions them onto healthy ones if the pods are a part of replica set.
+
+    Replication controller: Responsible for monitoring the status of replicasets and ensuring that the desired number of pods are
+    available at all times within the set. If a pod dies it creates a another one.
+
+Kube-Controller-Manager: It is a proces which has all the controllers.
