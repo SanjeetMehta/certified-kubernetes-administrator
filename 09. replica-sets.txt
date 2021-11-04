@@ -1,0 +1,82 @@
+Replication Controller: It helps us to run multiple instances of a single pod in a k8s cluster thus providing HA.
+    Even if we have a single pod replication controller helps in bringing up a single pod if the existing one fails.
+    Thus, it ensures that the specified number of pods are running at all times.
+
+    Load Balancing and Scaling:
+    Replication controller spans across multiple nodes in the cluster, it helps us to balance the load across multiple pod on 
+    different node as well as scale our application when the demand increases.
+
+Replication Controller vs ReplicaSet
+    Both have the same purpose but are not the same. Replication controller is the older technology that is being replaced by 
+    ReplicaSet.
+
+RC defination:
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+    name: myapp-rc
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    replicas: 2
+    template:
+        metadata:
+            name: myapp-pod
+            labels:
+                app: myapp
+                type: front-end
+        spec:
+            containers:
+            - name: nginx-container
+              image: nginx
+
+kubectl commands for RC:
+    kubectl get all (list all the created object at once)
+    kubectl create -f <file_name of the defination> 
+    kubectl get replicationcontroller (lists all the available rc)
+    kubectl get pods (lists pods created by rc)
+
+
+ReplicaSet: It can also manage the pods which were not created as a part of the replicaset creation.
+    "selector" is mandatory for ReplicaSet creation.
+
+    Labels and Selectors: Theses helps replicaset to montior the required pods. All the pods matching the labels are monitored
+    by replicaset.
+
+
+ReplicaSet defination:
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+    name: myapp-replicaset
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            type: front-end
+    template:
+        metadata:
+            name: myapp-pod
+            labels:
+                app: myapp
+                type: front-end
+        spec:
+            containers:
+            - name: nginx-container
+              image: nginx
+
+kubectl commands for ReplicaSet:
+    kubectl get all (list all the created object at once)
+    kubectl create -f <file_name of the defination> 
+    kubectl get replicaset (lists all the available replicaset)
+    kubectl get pods (lists pods created by replicaset)
+    kubectl delete replicaset <replica_set name> (deletes the replicaset and the underlying pods)
+    kubectl replace -f <file_name of the updated defination>
+    kubectl scale --replicas=6 -f  <file_name of the defination>
+    kubectl scale --replicas=6 replicaset <replica_set name>

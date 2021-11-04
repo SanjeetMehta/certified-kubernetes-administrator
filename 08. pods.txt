@@ -1,0 +1,26 @@
+Pods: Application containers are encapsulated into a k8s object called Pods. A pod is a single instance of an application. It is 
+    the smallest object which we can create in a k8s.
+
+    All the containers inside the pods are on the same network, that means they can access each other using localhost:port.
+
+Pod defination:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+
+kubectl commands:
+    kubectl get all (list all the created object at once)
+    kubectl create -f <file_name of the defination> 
+    kubectl get pods (lists all pods)
+    kubectl describe pod <pod_name> (displays all the details of a pod)
+    kubectl delete pod <pod_name> (delete a pod)
+    kubectl delete --all pod (delete all pods)
