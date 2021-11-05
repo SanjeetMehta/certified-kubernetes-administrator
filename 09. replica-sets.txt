@@ -57,7 +57,7 @@ metadata:
         type: front-end
 spec:
     replicas: 2
-    selector:
+    selector:       # Selectors are used to point to the right pod.
         matchLabels:
             type: front-end
     template:

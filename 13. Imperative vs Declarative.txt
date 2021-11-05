@@ -1,0 +1,25 @@
+Imperative: We have to give step by step instructions to achieve a goal.
+    eg:
+        Create Objects:
+        kubectl run  --image=nginx nginx
+        kubectl run custom-nginx --image=nginx --port=8080
+        kubectl create deployment --image=nginx nginx
+        kubectl expose deployment nginx --port 80
+        
+        Update Objects:
+        kubectl edit deployment nginx
+        kubectl scale deployment nginx --replicas=5
+        kubectl set image deployment nginx nginx=nginx:1.18
+
+        kubectl create -f nginx.yaml
+        kubectl replace -f nginx.yaml
+        kubectl delete -f nginx.yaml
+
+        kubectl run httpd --image=httpd:alpine --port=80 --expose (Creates a pod and exposes it as a ClusterIP service)
+        kubectl run redis --image=redis:alpine --labels=tier=db (Creates a pod with labels)
+        kubectl expose pod redis --name redis-service --port 6379 -target-port 6379 (Exposes the pod as ClusterIP  service)
+
+Declarative: We just have to give the final goal, k8s figures out the steps on its own.
+    eg:
+        kubectl apply -f nginx.yaml (This will be used for creating, updating, aor deleting a k8s object)
+        kubectl apply -f <directory_of_yaml>

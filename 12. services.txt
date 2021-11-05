@@ -1,0 +1,86 @@
+Services: It enables communication between various components within and outside of the application. K8s servies helps us connect
+    application together with other applications or users.
+    Service has its own IP and Port on a node. IP is called the ClusterIP of the service. Port is called the Port. Service is like 
+    a virtual server inside the node.
+    Port on the node used to access the web server externally which is know as NodePort.
+    Service acts as built-in load balancer to distribute load across different pods.
+
+Types of services:
+    NodePort: In this service makes internal pod accessible on a port. Here service listenes to a port on a host machines and forwards
+        the request to the pod running inside the k8s cluster.
+    ClusterIP: In this the service creates a virtual ip inside the cluster to enable communication between different services.
+    LoadBalancer: In this the service configures the LoadBalancer provided by the cloud service providers like aws, azure,etc.
+
+    NodePort - Service:
+        Here a service helps us by mapping a port on the node to a port on the pod.
+        NodePort can only be in a range 30000-32767
+
+        NodePort service definition:
+
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: myapp-service
+        spec:
+            type: NodePort
+            ports:
+            - targetPort: 80  # Port of the pod. If this is not provided, by default it will use the value of port.
+              port: 80        # Port of the service. This is mandatory.
+              nodePort: 30008 # Port of the node. It generates a random port between 30000-32767.
+        selector:         # Selectors are used to point to the right pod.
+            app: myapp
+            type: frontend
+
+        kubectl commands:
+            kubectl create -f service-definition.yml
+            kubectl get services
+    
+
+    ClusterIP - Service:
+
+        Service provides us an interface(ip or name) to access a group of pods. Since the pods are created/updated its IP address keeps 
+        on changing, Service helps us to establish a reliable communication with those pods without worrying about the pod's IP.
+        ClusterIP only works from within the cluster as its a virtual IP inside the cluster.
+
+        ClusterIP service definition:
+
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: myapp-service
+        spec:
+            type: ClusterIP # This is the default type.
+            ports:
+            - targetPort: 80  # Port of the pod. If this is not provided, by default it will use the value of port.
+              port: 80        # Port of the service. This is mandatory.
+            selector:         # Selectors are used to point to the right pod.
+                app: myapp
+                type: frontend
+
+        kubectl commands:
+            kubectl create -f service-definition.yml
+            kubectl get services
+
+    LoadBalancer - Service:
+
+        Service provides us an interface(ip or name) to access a group of pods. Since the pods are created/updated its IP address keeps 
+        on changing, Service helps us to establish a reliable communication with those pods without worrying about the pod's IP.
+        
+        LoadBalancer service definition:
+
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: myapp-service
+        spec:
+            type: LoadBalancer # This is the default type.
+            ports:
+            - targetPort: 80  # Port of the pod. If this is not provided, by default it will use the value of port.
+              port: 80        # Port of the service. This is mandatory.
+        selector:         # Selectors are used to point to the right pod.
+            app: myapp
+            type: frontend
+
+        kubectl commands:
+            kubectl create -f service-definition.yml
+            kubectl get services
