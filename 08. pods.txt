@@ -3,7 +3,7 @@ Pods: Application containers are encapsulated into a k8s object called Pods. A p
 
     All the containers inside the pods are on the same network, that means they can access each other using localhost:port.
 
-Pod defination:
+Pod definition:
 
 apiVersion: v1
 kind: Pod
@@ -19,8 +19,9 @@ spec:
 
 kubectl commands:
     kubectl get all (list all the created object at once)
-    kubectl create -f <file_name of the defination> 
+    kubectl create -f <file_name of the definition> 
     kubectl get pods (lists all pods)
     kubectl describe pod <pod_name> (displays all the details of a pod)
     kubectl delete pod <pod_name> (delete a pod)
     kubectl delete --all pod (delete all pods)
+    kubectl run nginx --image=nginx --port=80 --restart=Never (Creates pod directly)

@@ -1,7 +1,7 @@
 Deployments: It provides us the capability to upgrade the underlying instances seamlessly using rolling updates, undo changes, pause,
     and resume changes as required.
 
-Deployment defination:
+Deployment definition:
 
 apiVersion: apps/v1
 kind: Deployment
@@ -28,11 +28,11 @@ spec:
 
 kubectl commands for Deployments:
     kubectl get all (list all the created object at once)
-    kubectl create -f <file_name of the defination> 
+    kubectl create -f <file_name of the definition> 
     kubectl get deployments (lists all the available deployments)
     kubectl get replicaset (lists all the available replicaset created by the deployment)
     kubectl get pods (lists pods created by deployments)
     kubectl delete deployments <deployment name> (deletes the deployment and the underlying replicaset and pods)
-    kubectl replace -f <file_name of the updated defination>
-    kubectl scale --replicas=6 -f  <file_name of the defination>
+    kubectl replace -f <file_name of the updated definition>
+    kubectl scale --replicas=6 -f  <file_name of the definition>
     kubectl scale --replicas=6 replicaset <replica_set name>

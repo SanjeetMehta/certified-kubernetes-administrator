@@ -10,7 +10,7 @@ Replication Controller vs ReplicaSet
     Both have the same purpose but are not the same. Replication controller is the older technology that is being replaced by 
     ReplicaSet.
 
-RC defination:
+RC definition:
 
 apiVersion: v1
 kind: ReplicationController
@@ -34,7 +34,7 @@ spec:
 
 kubectl commands for RC:
     kubectl get all (list all the created object at once)
-    kubectl create -f <file_name of the defination> 
+    kubectl create -f <file_name of the definition> 
     kubectl get replicationcontroller (lists all the available rc)
     kubectl get pods (lists pods created by rc)
 
@@ -46,7 +46,7 @@ ReplicaSet: It can also manage the pods which were not created as a part of the 
     by replicaset.
 
 
-ReplicaSet defination:
+ReplicaSet definition:
 
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -73,10 +73,10 @@ spec:
 
 kubectl commands for ReplicaSet:
     kubectl get all (list all the created object at once)
-    kubectl create -f <file_name of the defination> 
+    kubectl create -f <file_name of the definition> 
     kubectl get replicaset (lists all the available replicaset)
     kubectl get pods (lists pods created by replicaset)
     kubectl delete replicaset <replica_set name> (deletes the replicaset and the underlying pods)
-    kubectl replace -f <file_name of the updated defination>
-    kubectl scale --replicas=6 -f  <file_name of the defination>
+    kubectl replace -f <file_name of the updated definition>
+    kubectl scale --replicas=6 -f  <file_name of the definition>
     kubectl scale --replicas=6 replicaset <replica_set name>
