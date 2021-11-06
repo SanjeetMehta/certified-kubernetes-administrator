@@ -1,0 +1,36 @@
+How scheduling works:
+    Scheduler looks for the nodeName property in pods configutation and then deploys the pod to the node matching this property.
+
+Pod definition:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+    nodeName: node-name
+
+NodeName can only be provided at the pod creation time. But if pod is already created and you want to assign it to a node in that
+case k8s doesn't allow to modify the NodeName property.
+
+To assign a already running pod to a node we have to create a pod-binding object and make a POST api call.
+
+curl --header "COntent-Type:application/json" --request POST --data '{converted yaml files as JSON}'
+http://$SERVER/api/v1/namespaces/default/pods/$PODNAME/binding
+
+Pod Binding definition:
+
+apiVersion: v1
+kind: Binding
+metadata:
+    name: nginx
+target:
+    apiVersion: v1
+    kind: node
+    name: node02
