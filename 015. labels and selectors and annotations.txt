@@ -1,0 +1,10 @@
+Labels: These are the properties attached to each item.
+Selectors: These helps us filter the items based on labels.
+
+Labels are a part of metadata section of any definition.
+
+kubectl commands:
+    kubectl get pods --selector app=App1
+    kubectl get pods --show-labels
+
+Annotations: It is used to record other details for informatory purpose. This is also the part of metadata section.

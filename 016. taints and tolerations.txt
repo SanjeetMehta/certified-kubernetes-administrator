@@ -1,0 +1,35 @@
+Taints: These are set on Nodes, by default pods cannot tolerate taints.
+Tolerations: These are set on Pods, if pod is tolreant to a particular taint only then the pods can be scheduled on a given node.
+
+these doesn't helps us to send a pod to a particular node, it only helps to restrict which pods can be created on a given node,
+i.e node with taint can only accept pods which has a toleration for that taint.
+
+kubectl commands:
+    kubectl taint nodes node-name key=value:taint-effect (taint-effect takes in 3 values, NoSchedule | PreferNoSchedule | NoExecute)
+                                                        NoSchedule: No new pods will be scheduled which do not tolerate the taint.
+                                                        PreferNoSchedule: New pods will try to avoid the Node but is not guranteed.
+                                                        NoExecute: No new pod will be scheduled, and the existing pods will be evicted.
+    
+    kubectl taint nodes node1 app=blue:NoSchedule
+
+    kubectl taint nodes node1 app=blue:NoSchedule- (Removes the taint from the node)
+
+Pod definition with toleration:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+    nodeName: node1
+    tolerations:
+    - key:  "app"           # quotes are mandatory
+      operator: "Equal"     # quotes are mandatory
+      value: "blue"         # quotes are mandatory
+      effect: "NoSchedule"  # quotes are mandatory
