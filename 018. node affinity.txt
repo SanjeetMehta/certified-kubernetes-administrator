@@ -1,0 +1,38 @@
+Node affinity:  It helps to schedule the pod on a particular node. We can provide advanced options like or or not.
+    Types:
+        Available:
+            requiredDuringSchedulingIngoredDuringExecution
+            preferredDuringSchedulingIngoredDuringExecution
+        Planned
+            requiredDuringSchedulingRequiredDuringExecution
+
+    these doesn't helps us to restric a pod from scheduling, it only helps to send a particular pod to a particular node,
+    i.e pods with affinity set can only land on node having the same label.
+
+
+Pod definition:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+    affinity:
+        nodeAffinity:
+            requiredDuringSchedulingIngoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                    - key: size
+                      operator: In       #(operator "Exists" can be used for just checking if key is present of not)
+                      values:
+                      -Large
+
+kubectl commands:
+    kubectl label nodes <node_name> <lavel_key>=<label_value> (labels a given node)
+    kubectl label nodes node01 name-  (removes lable from a node)

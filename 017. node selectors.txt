@@ -1,0 +1,21 @@
+Node Selector: It helps to schedule the pod on a particular node. We have to label the node for achieving this.
+     We cannot provide advanced options like or or not while selecting selectors.
+
+Pod definition:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+    nodeSelector:
+        size: Large
+    
+kubectl commands:
+    kubectl label nodes <node_name> <lavel_key>=<label_value> (labels a given node)
