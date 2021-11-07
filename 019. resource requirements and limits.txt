@@ -1,0 +1,30 @@
+Resource request for the container: Minimum amount of cpu or memory requested by the container.
+    (By default cpu is set as 0.5 and Memory as 256Mi. But if a container need more it will keep on acquiring the resource)
+Resource Limit: It helps to limit the usage of resources.
+    default limit for cpu: 1
+    default limit for memory: 512Mi
+    For the POD to pick up those defaults you must have first set those as default values for request and limit by creating a LimitRange in that namespace. 
+Request and limits are to be set for each container.
+
+The status OOMKilled indicates that it is failing because the pod ran out of memory. Identify the memory limit set on the POD.
+
+Pod definition:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: myapp-pod
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    containers:
+    - name: nginx-container
+      image: nginx
+      resources:
+        requests:
+            memory: "1Gi"
+            cpu: 1      # ranges from (0.1 or 1m to infinity)
+        limits:
+            memory: "2Gi"   # If a pod tries to consume more memory than the limit constantly then the pod is terminated, if its occasional then its allowed.
+            cpu: 2          # Pod cannot consume more memory than the limit.

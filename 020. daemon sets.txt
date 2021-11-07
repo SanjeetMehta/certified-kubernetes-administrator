@@ -1,0 +1,31 @@
+DaemonSet: It schedules a pod on each node automatically, and if a new node comes up pod is automatically scheduled onto it,
+    and if the node goes down it automatically destroys the pod created on that node.
+    eg: kube-proxy
+
+    up until v1.12: daemonset use to set nodeName property and directly bypasses the scheduler.
+    from v1.12: daemonset started to use nodeaffinity and scheduler.
+
+DaemonSet definition:
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+    name: monitoring-daemon
+spec:
+    replicas: 2
+    selector:       # Selectors are used to point to the right pod.
+        matchLabels:
+            type: monitoring-agent
+    template:
+        metadata:
+            labels:
+                app: monitoring-agent
+        spec:
+            containers:
+            - name: monitoring-agent
+              image: monitoring-agent
+
+kubectl commands:
+    kubectl create -f daemon=set-definition.yml
+    kubectl get daemonsets
+    kubectl describe daemonsets monitoring-daemon
