@@ -5,6 +5,8 @@ DaemonSet: It schedules a pod on each node automatically, and if a new node come
     up until v1.12: daemonset use to set nodeName property and directly bypasses the scheduler.
     from v1.12: daemonset started to use nodeaffinity and scheduler.
 
+    pods created by static pods and daemonsets are not managed by scheduler.
+
 DaemonSet definition:
 
 apiVersion: apps/v1

@@ -1,0 +1,19 @@
+Kubernetes scheduler can have multiple scheduler at the same time. We can have a custom scheduler running alongside k8s scheduler.
+When creating a deployment or a pod we can instruct k8s to use a particular scheduler.
+
+
+Pod with custom scheduler definition:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: nginx
+spec:
+    containers:
+    - image: nginx
+      name: nginx
+    schedulerName: my-custom-scheduler
+
+kubectl commands:
+    kubectl get events (and look for scheduled events)
+    kubectl logs my-custom-scheduler --name-space=kube-system

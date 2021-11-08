@@ -1,0 +1,8 @@
+Static pods: These are pods directly created by kubelet on a node. Kubelet looks at the manifest folder and reads a configuration from there. 
+    All control plane components are run as static pods in k8s.
+    Node name is appended to the static pod's name.
+
+pods created by static pods and daemonsets are not managed by scheduler.
+
+kubectl command:
+    kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
