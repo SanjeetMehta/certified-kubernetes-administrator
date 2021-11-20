@@ -1,0 +1,14 @@
+When we first create a ddeployment it triggeres a rollout. A new rollout creates a new deployment revision.
+
+Deployment Strategy.
+    Recreate: first delete the old pod and the create a new one.
+    Rolling update: first create the pod and then delete the old one. This is the default strategy.
+
+kubectl commands:
+    kubectl create -f deployment-definition.yml
+    kubctl get deployments
+    kubectl apply -f deployment-definition.yml
+    kubctl set image deployment/<deployment_name> nginx=nginx:1.9.1
+    kubectl rollout status deployment/<deployment_name> (status of rollout)
+    kubectl rollout history deployment/<deployment_name> (rivisions and history of rollout)
+    kubectl rollout undo deployment/<deployment_name> (rollback the deployment)
