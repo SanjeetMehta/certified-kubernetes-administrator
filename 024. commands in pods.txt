@@ -1,0 +1,42 @@
+Commands are the entry point into a container.
+
+In docker image.
+CMD: This command is used to start a docker container when we do a docker run.
+    This can be changed during docker start by providing a command during docker run.
+    This should be provided in JSON format.
+
+    docker run <image_name> command
+
+ENTRYPOINT: This command is used to start a docker container when we do a docker run.
+    However, this cannot be changed unlike CMD command douring docker run, all the parameters provided during docker run
+    are appended to the command provided.
+    This should be provided in JSON format.
+
+    docker run <image_name> value_to_be_appended
+
+    To override a ENTRYPOINT command using following command
+
+    docker run --entrypoint <command> <image_name> <value>
+
+If we provide both CMD and ENTRYPOINT then ENTRYPOINT appends value which is provided in CMD.
+This should be provided in JSON format.
+
+eg:
+FROM Ubuntu
+ENTRYPOINT ["sleep"]
+CMD ["5]
+
+during runtime: sleep 5
+
+Pod definition with command:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: ubuntu-sleeper-pod
+spec:
+    containers:
+        - name: ubuntu-sleeper
+          image: ubuntu-sleeper
+          command: ["sleep2.0"] $ used to replace entrypoint command.
+          args: ["10"]   # It overrides the CMD command inside docker file.

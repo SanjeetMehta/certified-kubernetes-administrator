@@ -1,0 +1,34 @@
+ConfigMaps: It is used to manage the environment variables.
+
+Pod definition with ConfigMaps:
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: simple-webapp-color
+spec:
+    containers:
+    - name: simple-webapp-color
+      image: simple-webapp-color
+      ports:
+        - containerPort: 8080
+      envFrom:
+        - configMapRef:
+            name: app-config
+
+config map definition:
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: app-config
+data:
+    APP_COLOR: blue
+    APP_MODE: prod
+
+
+kubectl commands:
+    kubectl get configmaps
+    kubectl describe configmaps
+    kubectl create configmap <configmap_name> --from-literal=<key>=<value>
+    kubectl create configmap <configmap_name> --from-file=<key>=<path_to_properties_file>
