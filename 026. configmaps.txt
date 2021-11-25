@@ -31,4 +31,4 @@ kubectl commands:
     kubectl get configmaps
     kubectl describe configmaps
     kubectl create configmap <configmap_name> --from-literal=<key>=<value>
-    kubectl create configmap <configmap_name> --from-file=<key>=<path_to_properties_file>
+    kubectl create configmap <configmap_name> --from-file=<path_to_properties_file>
