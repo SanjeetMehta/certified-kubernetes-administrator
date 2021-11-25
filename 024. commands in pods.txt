@@ -38,5 +38,5 @@ spec:
     containers:
         - name: ubuntu-sleeper
           image: ubuntu-sleeper
-          command: ["sleep2.0"] $ used to replace entrypoint command.
+          command: ["sleep2.0"] # used to replace entrypoint command.
           args: ["10"]   # It overrides the CMD command inside docker file.
