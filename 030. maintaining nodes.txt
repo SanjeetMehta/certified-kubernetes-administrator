@@ -1,0 +1,10 @@
+For maining a node we sometime have to bring down the node. For doing this we have to actually move the pods to different node and then bring it down, do the update. Once the update is
+    done bring the node up.
+
+We cannot drain the node which has pods which doesn't belong to any replica set.
+
+kubectl commands:
+    kubectl drain <node_name> (Moves all the pods from a given node to different nodes)
+    kubectl drain node01 --ignore-daemonsets (This is mandatory while draining otherwise kubectl command fails)
+    kubectl cordon <node_name> (Marks node as unshedulable, i.e no new pods can be scheduled onto it)
+    kubectl uncordon <node_name> (Marks node as shedulable)
