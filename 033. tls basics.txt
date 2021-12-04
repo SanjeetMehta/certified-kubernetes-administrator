@@ -1,0 +1,4 @@
+A certificate is used to gurantee trust b/w two parties during a transaction, for eg: when users tries to access a webserver 
+tls certificates ensure that the communication b/w the user and the server is encrypted and the server is who it says it is.
+
+Without certificates, details will be sent as a plain text format.

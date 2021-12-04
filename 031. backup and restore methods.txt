@@ -1,0 +1,10 @@
+Backup Candidates:
+    - Resource configuration -> Eg: Use Github (Declarative approach)
+    - ETCD cluster -> Backup the directory which is being used by etcd. (Not needed in managed k8s)
+    - Persistent Volumnes
+
+
+kubectl command:
+    kubectl get all --all-namespaces -o yaml > all-deploy-services.yaml (velero is one such tools which takes backup using kube-apiserver)
+    eETCDCTL_API=3 tcdctl snapshot save snapshot.db (saves snapshot of etcd cluster)
+    etcdctl restore snapshot.db --data-dir <path_to_snapshot>

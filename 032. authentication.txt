@@ -1,0 +1,14 @@
+Different users accessing the cluster: Admins, Developers, Application End users, Bots
+
+Application End users-> This is managed by the application and not the kubernetes.
+
+Types of kubernetes users.
+    1. Users (Admin and Developers) -> Kubernetes don't manage it, k8s relies on some 3rd party service.
+        All user access is managed by the kube-apiserver. Kube-apiserver authenticates the request before processing it.
+        There are different authentication mechanisms that can be configured.
+            - static password file -> Create a csv files containing username and password and use it. (Not recommended)
+            - static token file -> Create a csv files containing username and token and use it. (Not recommended)
+            - using certificates
+            - identity services (like LDAP, etc.)
+
+    2. Bots (Service accounts) -> K8s manages these.
