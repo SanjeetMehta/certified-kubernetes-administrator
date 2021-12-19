@@ -38,3 +38,14 @@ CA:
 To create a legitimate certificates we need to get our certificates signed by well known CA like ,symantec, digicert, etc.
 CAs also have set of private and public key pairs. CA use private keys to sign the certificates and the public keys of all the CAs are built into the browser. The browser uses public
 keys of CA to validate if the the certificate was signed by the CA themselves.
+
+PKI: Public key infrastructure
+This whole infrastructure including the CS, server, the people, and the process of generating, distributing, and mainiaining the certificates is known as PKI.
+
+Public key and Private key is decided by us, any one key of asymmetric encryption can be a public and other a private key. So user should be carefull on which key he uses to encrypt the
+data with. Data should never be encrypted with private key as anyone having your public key can decrypt the data.
+
+Naming convention:
+Public key: Usually a public key is named with *.crt, *.pem
+
+Private key: Usually a priavte key is named with *.key, *-key.pem
