@@ -2,3 +2,39 @@ A certificate is used to gurantee trust b/w two parties during a transaction, fo
 tls certificates ensure that the communication b/w the user and the server is encrypted and the server is who it says it is.
 
 Without certificates, details will be sent as a plain text format.
+
+That which travels over the web should be encrypted, they are encrypted using a key which contains random set of numbers and alphabets. But now, server also receives
+the encrypted data, it cannot decrypt the data without the key. So, a copy of key also needs to be sent to the server. Now, the problem with this is that attacker can also 
+retrieve the key and decrypt the data. This type of encryption is called symmetric encryption as same key is being used to encrypt and decrypt the data.
+To overcome this flaw, the asymmetric encryption comes to rescue.
+Asymmetric encryption uses a pair of keys, one for encrypting the data(Public key) and another for decrypting the data(Private key).
+
+Private key should not be shared. But the public key can be shared with other, its just use for locking. So, if data is locked using a public key then a corresponding private key
+can only be used for decrypting the data.
+
+ssh access to server: We generate a public and a private key pair, 
+
+command: ssh-keygen
+
+It creates 2 files, id_rsa (private key file), and id_rsa.pub (public key file). We then secure our server by locking all the access to it by using public key.
+This is done by putting a public file under ~/.ssh/authorized_keys.
+Private key remains with the user, so when a user tries to ssh into the server he needs to specify the location of private key file.
+
+To securely transfer the symmetric key from the client to the server you use asymmetric encryption. So we generate a public and private key pair on the server.
+
+command: openssl genrsa -out my-bank.key 1024
+        openssl rsa -in my-bank.key -pubout > mybank.pem
+
+When the user 1st accesses the webserver using https, he gets the public key from the server. Then the users browser encrypts the symmetric key using the public key received.
+The symmetric key is now secured. Now the server uses private key to decrypt the message and retrieve the symmetric key.
+
+Public key from the server is sent to us inside a certificate. Every certificate has a name on it, subject to which the certificate is issued to. Subject should match with the url
+which the user types in into the browser.
+Alternative Name: it contains the list of different valid urls for the given website.
+To verify the certificate about it validity once should look at who signed the certificate and who issued it. 
+All the web browser is built with the certificate validation mechanism where browser validates the certificate received. If certificate is not valid then the browser warns the user.
+
+CA:
+To create a legitimate certificates we need to get our certificates signed by well known CA like ,symantec, digicert, etc.
+CAs also have set of private and public key pairs. CA use private keys to sign the certificates and the public keys of all the CAs are built into the browser. The browser uses public
+keys of CA to validate if the the certificate was signed by the CA themselves.
