@@ -1,0 +1,32 @@
+Certificites API
+We can send a certificate signing request directly to kubernetes through an API call. This time when a administrator receives a certificate signing request instead of doing it manually
+he creates a kubernetes api object called CertificateSigningRequest.
+
+Steps for signing:
+1. User first creates a key and generates a certificate signing request using the key with her name on it. 
+    openssl genrsa -out jane.key 2048
+2. Sends this request to the administrator.
+3. Then administrator takes the key and generates a CertificateSigningRequest object.
+
+Yaml file for CertificateSigningRequest:
+
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+    name: jane
+spec:
+    groups:
+    - system:authenticated
+    signerName: kubernetes.io/kube-apiserver-client
+    usages:
+    - digital signature
+    - key encipherement
+    - server auth
+    request:
+        encoded request message generated using base64.  --> cat jan.csr | base64
+
+kubectl commands:
+    kubectl get csr (Lists all the certificate)
+    kubectl certificate approve jane (approve the certificate)
+    kubectl get csr jane -o yaml (shows certificate in a yaml format which is encoded in base64 format echo "abc..." | base64 --decode)
+    kubectl certificate deny agent-smith (denies the certificate request)
