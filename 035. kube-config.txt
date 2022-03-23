@@ -1,0 +1,47 @@
+KubeConfig file is located at $HOME/.kube/config location.
+
+It has 3 sections, clusters, contexts, and users.
+
+Cluster: It contains the cluster informations
+User: It contains the user informations
+Contexts: It contains the mapping between users and clusters, i.e which user can access which clusters.
+
+
+YAML file for KubeConfig (We don't have to apply this to cluster, this file is left as is, and kubectl uses it)
+
+apiVersion: v1
+kind: config
+current-context: dev-user@google (we can change this using command line, it sets the default cluster which kubectl should use)
+clusters:
+-name: my-kube-playground
+ cluster:
+    certificate-authority: ca.crt  (this is path, if you want to use data as it is use certificate-authority-data key and provide a base64 encoded data )
+    server: https://my-kube-playground:6443
+-name: development
+-name: production
+-name: google
+
+
+contexts:
+-name: my-kube-admin@my-kube-playground
+ context:
+    cluster: my-kube-playground
+    user: my-kube-admin
+    namespace: dev (predefine a particular namespace, by default its "default")
+-name: dev-user@google
+-name: prod-user@productions
+
+users:
+-name: my-kube-admin
+ user:
+    client-certificate: admin.cert
+    client-key: admin.key
+-name: admin
+-name: dev-user
+-name: prod-user
+
+
+kubectl commands:
+    kubectl config view (shows details of kubeconfig)
+    kubectl config view --kubeconfig=my-custom-config (specifiy specific kubeconfig)
+    kubectl config use-context prod-user@production (change the current context)
