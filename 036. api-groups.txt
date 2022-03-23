@@ -1,0 +1,48 @@
+Different apis available
+curl https://kube-master:6443/version -> returns version
+
+curl https://kube-master:6443/api/v1/pods -> returns list of pods 
+
+/version
+/api
+/apis
+/metrics
+/healthz
+/logs
+
+These apis have different purposes, some are used for monitoring, some for logs, etc.
+
+
+APIs responsible for cluster functionality
+/api -> core group
+/apis -> named group
+
+core group: this contains the core functionality
+/api/v1 
+ - namespaces, pods, replication controller, events, endpoints, nodes, bindings, PV, PVC, configmaps, secrets, services
+
+ named group (going forward, new functionalities are going to be added in named groups):
+ /apis
+    - /apps (api group)
+        - /v1 
+            - /deployments, /replicasets, /statefulsets (resource group)
+                - each resource has set of actions associated with them like list, get, create, delete, update, watch (these are known as verbs)
+    - /extensions (api group)
+        - /v1
+            - /networkpolicies
+    - /networking.k8s.io (api group)
+    - /storage.k8s.io (api group)
+    - /authentication.k8s.io (api group)
+    - /certificate.k8s.io (api group)
+        - /v1
+            - /certificatessigningrequests (resource group)
+
+
+kubectl commands:
+    kubectl proxy (launches a proxy service locally and uses kubeconfig file to access cluster)
+
+
+kube proxy != kubectl proxy
+
+kube proxy -> it is used to enable communication b/w pods and services accross different nodes in cluster
+kubectl proxy -> This is http proxy service created by kubectl utility to access kube api server
