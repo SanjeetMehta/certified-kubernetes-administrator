@@ -1,0 +1,30 @@
+Authorization: Once machine/user gets access to the cluster, what can they do? that's what authorization defines.
+
+Authorization mechanisms:
+    Node
+    ABAC (Attribute based authorization)
+    RBAC
+    Webhook
+
+Node Authorizer: 
+    Kube-api-server is accessed by users for management purposes as well as kublet on nodes within the cluster also access kube-api-server for management purposes within the cluster.
+    Kubelet also reports to the kube-api-server with information about the node. These requests from kubelet are handled by a special authorizer know as the node authorizer.
+
+Attribute BAC:
+    In this we associate a user or a group of users with a set of permissions.
+    We do it by creating a policy file with a set of policies defined in a json format. We pass this file into API server. Next we create a policy defination file for each use or group.
+    It is difficult to manage.
+
+Role BAC:
+    This makes user access management easier. In this rather that assigning user/groups the permissions, we create a set of roles. Then we associate all the users to that role.
+
+Webhook:
+    If we want to outsource all the authorization mechanism then that is achieved via webhooks. 
+    eg: open policy agent is a 3rd party tool which helps with the authorization. In this k8s makes an api call to open policy agent with user information and access requirements.
+    Then open policy agent decides if the user should be permited or not.
+
+AlwaysAllow:
+    Allows everything, this is done which starting kube-api-server
+
+AlwaysDeny:
+    Deny everything, this is done which starting kube-api-server
