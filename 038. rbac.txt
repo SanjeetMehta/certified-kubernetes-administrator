@@ -1,0 +1,54 @@
+Role creation:
+Below is the yaml file for role creation, in rules section we have 3 attributes
+    apiGroups ("" is used for core groups, for anyother group we need to specify a group name)
+    resources (resources to which access is to be given)
+    verbs (and the actions they can perform are mentioned here)
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: 
+    name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods]
+  verbs: ["list", "get", "create", "udated", "delete"]
+  resourceNames" ["blue", "orange"] (This is optional, it allows us to control the access at resource level)
+- apiGroups: [""]
+  resources: ["ConfigMap]
+  verbs: ["create"]
+
+kubectl commands:
+    kubectl create -f role.yaml
+
+Linking user to a role:
+For linking user to a specific role we create a object called RoleBinding
+Below is the yaml file for rolebinding creation, it has 2 sections
+
+subjects: Its the place where we specify the user details
+roleRef: Its the place where we provide the details of the role we created
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+    name: devuser-developer-binding
+subjects:
+- kind: user
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+    kind: Role
+    name: developer
+    apiGroup: rbac.authorization.k8s.io
+
+kubectl commands:
+    kubectl create -f role-binding.yaml
+    kubectl get role
+    kubectl get rolebindings
+    kubectl describe role <role_name>
+    kubectl describe rolebinding <role_binding_name>
+    kubectl auth can-i create deployments (check the access for user)
+    kubectl auth can-i create deployments --as <user_name> (Admin can check the access of other user using this command)
+    kubectl auth can-i create deployments --as <user_name> --namespace <namespace_name>
+
+Note: Roles and the RoleBinding fall under the scope of namespaces, in above yaml, devuser gets access to resources in default namespace.
+Namespace can be provided in the metadata section.
