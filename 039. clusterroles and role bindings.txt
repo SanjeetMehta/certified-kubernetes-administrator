@@ -1,0 +1,37 @@
+Cluster roles: Theses are roles for cluster scoped resources.
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+    name: cluster-administrator
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["list", "get", "create", "delete"]
+
+kubectl commands:
+    kubectl create -f cluster-role.yaml
+
+
+Linking user to a cluster role:
+For linking user to a specific role we create a object called ClusterRoleBinding.
+Below is the yaml file for clusterrolebinding creation, it has 2 sections
+
+subjects: Its the place where we specify the user details
+roleRef: Its the place where we provide the details of the clusterrole we created
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+    name: cluster-admin-role-binding
+subjects:
+- kind: User
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+    kind: ClusterRole
+    name: cluster-administrator
+    apiGroup: rbac.authorization.k8s.io
+
+kubectl commands:
+    kubectl create -f cluster-role-binding.yaml

@@ -28,6 +28,8 @@ kubectl commands:
     kubectl create namespace <namespace_name> (Creates namespace using command.)
     kubectl config set-context $(kubectl config current-context) --namespace=<namespace_name> (Changes the default config to point to the new namespace)
     kubectl get pods --all-namespaces (lists pods of all the namespaces)
+    kubectl api-resources --namespaced=true (Get list of napespaced resources)
+    kubectl api-resources --namespaced=false (Get cluster scoped resources)
 
 Namespace ResourceQuota definition:
 
