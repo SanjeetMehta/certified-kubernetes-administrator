@@ -1,0 +1,20 @@
+k8s provides a  secret of type docker-registry. docker-registry is a built in secret type that was built for storing docker 
+credentials.
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: nginx-pod
+spec:
+    containers:
+    - name: nginx
+      image: private-registry.io/apps/internal-application
+    imagePullSecrets: 
+    - name: regcred
+    
+kubectl commands:
+    kubectl create secret docker-registry regcred \
+    --docker-server= private-registry.io \
+    --docker-username= registry-user \
+    --docker-password= registry-password \
+    --docker-email= email@user.com
