@@ -1,0 +1,38 @@
+Container security: docker run command provides us a set of security standards such as id of the user used to run the container, the linux capabilities that can be added/removed from the container.
+
+These can be configured in k8s as well.
+
+In k8s we can set the security settings at the container level or the pod level. If settings are applied at pod level, the setting are applied to all the containers. And if the settings
+are applied at both the pod and the container level, the container level settings will override the pod settings. 
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: web-pod
+spec:
+    securityContext:
+        runAsUser: 1000
+    containers:
+        - name: ubuntu
+          image: ubuntu
+          command: ["sleep", "3600"]
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+    name: web-pod
+spec:
+    containers:
+        - name: ubuntu
+          image: ubuntu
+          command: ["sleep", "3600"]
+          securityContext:
+            runAsUser: 1000
+            capabilities:
+                add: ["MAC_ADMIN"]
+
+
+kubectl commands:
+    kubectl exec ubuntu-sleeper -- whoami (user used to execute the pod)
