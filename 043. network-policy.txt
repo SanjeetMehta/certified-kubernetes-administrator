@@ -1,0 +1,60 @@
+Ingress traffic: Incoming traffic from a user.
+Egress traffic: Outgoing request.
+
+Network security:
+    by default, k8s is configured with "All Allow" rule that allows traffic from any pod to anyother pod or servies within the cluster.
+
+Network policy:
+    It is a another object in k8s namespace just like pods, we link a network policy to one or more pods. We can define the rules within the network policies.
+
+
+# namespaceSeclector can be used to restrict access to particular namespace, if its not given resources in any namespace
+# will have the same network policy. For namespaceSeclector to work, namespace must be labeled.
+# If podSelector is not mentioned, then all the pods in the namespaceSeclector will be allowed to reach the pods.
+# we can group rules, in bello example podSelector and namespaceSelector in one group, so both the condition will be matched.
+# different blocks work as OR operation, same block works as AND operation.
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+    name: db-policy
+spec:
+    podSelector:
+        matchLabels:
+            role: db
+    policyTypes:
+    - Ingress
+    - Egress
+    ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+                name: api-pod
+          namespaceSeclector:
+            matchLabels:
+                name: prod
+        - ipBlock:
+            cidr: 192.168.5.10/32
+        ports:
+        - protocol: TCP
+          port: 3306
+    egress:
+    - to:
+        - ipBlock:
+            cidr: 192.168.5.10/32
+      ports:
+      - protocol: TCP
+        port: 80
+
+kubectl commands:
+    kubectl apply -f policy-definition.yaml
+
+Network policies are enforced by the network solutions implemented on k8s cluster, and not all network solutions support network policies.
+
+supported:
+    Kube-router
+    Calico
+    Romana
+    Weave-net
+Not supported:
+    Flannel
