@@ -1,0 +1,33 @@
+File system:
+    /var/lib/docker
+        aufs
+        containers
+        image
+        volumes
+
+Layered architecture:
+    When docker builds images, it builds them in a layered arch. Each line of instructions in dockerfile creates a new layer in the docker image. Each layer only stores changes from the previous layer
+    it is reflected in the size as well.
+    If layers already exists in cache, docker use it rather than creating a new layer.
+
+When creating container of an image, docker creates container based of the images and creates a new writable layer on top of the image layer. The writable layer is used to store the 
+data created by the container such as log file, any temp file, or any file modified by the user. The life of this layer though is only as long as the container is alive. Once
+the container is destroyed, then all of the changes stored in it are also destroyed.
+
+For persisting the data created by the container we can add a persistent volume to the container.
+    docker volume create data_volume -> Creates volumes in /var/lib/docker/volumes directory.
+    docker run -v data_volume:/var/lib/mysql mysql (If volume is not already created, docker will create the volume. We can also mount the complete directory).
+
+    docker run --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
+
+volume mounting: It mounts volumes from volumes directory 
+bind mount: It mounts a directory from any location on docker host.
+
+Docker uses storage drivers to enable the layred architecture, it helps to manage storage on images and containers. Volumes are not handled by storage drivers.
+eg: AUFS, ZFS, BTRFS, Device Mapper, Overlay, Overlay2.
+
+Volume drivers:
+    It handles volumes. The default volume driver plugin is local. It helps to create volume on docker host and store its data under /var/lib/docker/volumes directory.
+    eg: Local, Azure File Storage, Convoy, DifitalOcean Block Storage, gce-docker, etc.
+
+    docker run -it --name mysql --volume-driver rexray/ebs --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql

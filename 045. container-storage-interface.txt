@@ -1,0 +1,12 @@
+Container runtime interface:
+    It is a standard that defines how an orchestration solution like k8s can communicate with container runtime engines
+    like docker. So if in the future and new container runtime interface is developed they can simply follow CRI
+    standards and that new container runtime could work with k8s without being dependent on k8s.
+
+Container Network interface:
+    To extend support for different newtowrking solutions the container newtowrking interface was introduced.
+
+Container Storage interface (This is universal standard):
+    This was developed to support multiple storage solutions.
+
+    CSI should provide RPC calls for, create volume, delete volume, and ControllerPublishVolume.
