@@ -1,0 +1,22 @@
+Persistent Volumes:
+    It is a cluster wise a pool of storage volumes configured by an administrator to be used by users deploying applications
+    on the cluster.
+    This user can now select storage from this pool using persistent volume claim.
+
+PV definition:
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: pv-vol1
+spec:
+    accessModes:
+        - ReadWriteOnce
+    capacity:
+        storage: 1Gi
+    hostPath:
+        path: /tmp/data
+
+kubectl commands:
+    kubectl apply -f pv-definition.yaml
+    kubectl get persistentvolume

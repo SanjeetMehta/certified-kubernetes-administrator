@@ -27,9 +27,9 @@ Types of services:
             - targetPort: 80  # Port of the pod. If this is not provided, by default it will use the value of port.
               port: 80        # Port of the service. This is mandatory.
               nodePort: 30008 # Port of the node. It generates a random port between 30000-32767.
-        selector:         # Selectors are used to point to the right pod.
-            app: myapp
-            type: frontend
+            selector:         # Selectors are used to point to the right pod.
+                app: myapp
+                type: frontend
 
         kubectl commands:
             kubectl create -f service-definition.yml
